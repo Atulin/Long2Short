@@ -1,0 +1,55 @@
+﻿@page "/"
+@using System.Text
+@using System.Text.RegularExpressions
+@using System.Diagnostics.CodeAnalysis
+
+<div id="form">
+    <textarea name="input" 
+        id="input" 
+        @oninput="InputChanged"></textarea>
+    
+    <textarea 
+        name="output" 
+        id="output" 
+        readonly>@Output</textarea>
+</div>
+
+@code
+{
+    private string Output { get; set; } = string.Empty;
+
+    [SuppressMessage("ReSharper", "PossiblyMistakenUseOfParamsMethod")]
+    private void InputChanged(ChangeEventArgs obj)
+    {
+        var input = (string)(obj.Value ?? string.Empty);
+        
+        try
+        {
+            var split = input
+                .Split('{', '}')
+                .Where(x => !x.Contains(';'))
+                .Select(x => x.Trim())
+                .Select(x => Regex.Replace(x, @"\s+", " "))
+                .ToArray();
+
+            var sb = new StringBuilder();
+            sb.Append(split[0]);
+            sb.Append('(');
+
+            var props = split[1..^2]
+                .Select(s => s.Split('{')[0])
+                .Select(left => string.Join(' ', left.Split(' ')[^2..]))
+                .ToList();
+
+            sb.Append(string.Join(", ", props));
+            sb.Append(')');
+
+            Output = sb.ToString();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            Output = input;
+        }
+    }
+}
