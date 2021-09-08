@@ -5,3 +5,13 @@ main#body {
     align-items: center;
     justify-content: center;
 }
+h1 {
+    color: #eeebe7;
+}
+h2 {
+    color: rgba(238, 235, 231, 0.73);
+}
+
+h2 > span {
+    cursor: help;
+}

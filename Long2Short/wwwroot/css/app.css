@@ -1,23 +1,46 @@
 *, *:before, *:after {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
 }
 
 body {
     background-color: #15141a;
+    background-image:
+            radial-gradient(at top left, #15141a, transparent),
+            radial-gradient(at top right, #3b2a38, transparent),
+            radial-gradient(at bottom left, #474335, transparent);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
-a, .btn-link {
-    color: #0366d6;
+#app > #loader {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+#app > #loader > .bar {
+    font-size: 2rem;
+    color: #eeebe7;
+    padding: 2rem;
+    animation: alternate animate-text 1s infinite ease-in-out;
+}
+
+@keyframes animate-text {
+    from {
+        color: rgba(238, 235, 231, 1);
+    }
+    to {
+        color: rgba(238, 235, 231, .3);
+    }
 }
 
 .content {
@@ -48,9 +71,9 @@ a, .btn-link {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
